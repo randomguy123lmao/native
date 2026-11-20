@@ -1,0 +1,52 @@
+[package]
+name = "gmsv_delirium"
+version = "0.1.0"
+edition = "2024"
+# Delirium Physics is GPL-3.0-only; this module is built from it.
+license = "GPL-3.0-only"
+publish = false
+description = "Garry's Mod server module: Delirium Physics (the GTA IV Euphoria port) driving ragdolls"
+
+[lib]
+name = "gmsv_delirium"
+crate-type = ["cdylib", "rlib"]
+
+[[example]]
+name = "rpfls"
+
+[[example]]
+name = "hostsim"
+
+[[example]]
+name = "hostcheck"
+
+[[example]]
+name = "probe"
+required-features = []
+
+[features]
+# the Lua binding (off for the probe example, which runs outside Garry's Mod)
+default = ["gmod"]
+gmod = []
+
+[dependencies]
+delirium = { path = "../../delirium-physics-main/crates/delirium" }
+delirium-data = { path = "../../delirium-physics-main/crates/delirium-data" }
+miniz_oxide = "0.8"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 4
+# (panics are caught at every Lua entry point: unwinding into Garry's Mod would take the server down)
+panic = "unwind"
+
+[profile.dev]
+# the engine is far too slow unoptimised (as in the Delirium workspace)
+opt-level = 3
+
+[[example]]
+name = "getupsim"
+
+[[example]]
+name = "getuptrain"
