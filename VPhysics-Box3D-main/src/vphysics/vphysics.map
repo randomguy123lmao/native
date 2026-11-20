@@ -1,0 +1,7 @@
+{
+	global:
+		CreateInterface;
+		VBox3D_Delirium_*;
+	local:
+		*;
+};
